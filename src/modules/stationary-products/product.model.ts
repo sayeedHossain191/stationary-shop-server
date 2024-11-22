@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose';
+import { model, Schema } from 'mongoose';
 import { StationeryProduct } from './product.interface';
 
 const stationeryProductSchema = new Schema<StationeryProduct>(
@@ -57,4 +57,9 @@ const stationeryProductSchema = new Schema<StationeryProduct>(
   {
     timestamps: true, // Adds createdAt and updatedAt fields
   },
+);
+
+export const StationeryProductModel = model<StationeryProduct>(
+  'StationeryProduct',
+  stationeryProductSchema,
 );
