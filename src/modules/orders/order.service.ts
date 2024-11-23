@@ -1,14 +1,7 @@
 import { StationeryProductModel } from '../stationary-products/product.model';
 import { Order } from './order.interface';
 import { OrderModel } from './order.model';
-//import { StationeryProductModel } from './stationeryProduct.model';
 
-/**
- * Handles ordering a product and updates inventory.
- * @param orderData - The order details from the request.
- * @returns The created order.
- * @throws Error if the product is not found or there is insufficient stock.
- */
 const orderProductIntoDB = async (orderData: Order) => {
   const { product, quantity } = orderData;
 
@@ -39,7 +32,27 @@ const orderProductIntoDB = async (orderData: Order) => {
   return result;
 };
 
+const calculateRevenueFromDB = async () => {
+  const result = await OrderModel.aggregate([
+    {
+      $group: {
+        _id: null, // No grouping key; calculate total for all orders
+        totalRevenue: { $sum: '$totalPrice' }, // Sum up the totalPrice field
+      },
+    },
+    {
+      $project: {
+        _id: 0, // Exclude the _id field in the output
+        totalRevenue: 1,
+      },
+    },
+  ]);
+
+  return result.length > 0 ? result[0] : { totalRevenue: 0 };
+};
+
 // Export the service
 export const orderServices = {
   orderProductIntoDB,
+  calculateRevenueFromDB,
 };

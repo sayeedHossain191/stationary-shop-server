@@ -13,27 +13,27 @@ app.use('/api/products', productRouter);
 app.use('/api/orders', orderRouter);
 
 const getAController = (req: Request, res: Response) => {
-  res.send('Hello');
+  res.send('Hello From Stationary');
 };
 
 app.get('/', getAController);
 
-// Error-handling Middleware
-app.use((req: Request, res: Response, next: NextFunction) => {
-  res.status(404).json({
-    message: 'Route not found',
-    status: false,
-  });
-});
+// // Error-handling Middleware
+// app.use((req: Request, res: Response, next: NextFunction) => {
+//   res.status(404).json({
+//     message: 'Route not found',
+//     status: false,
+//   });
+// });
 
-// Global Error Handler
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  console.error(err.stack); // Log error stack for debugging
-  res.status(err.status || 500).json({
-    message: err.message || 'An unexpected error occurred',
-    status: false,
-    errors: err.errors || undefined, // Validation errors, if any
-  });
-});
+// // Global Error Handler
+// app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+//   console.error(err.stack); // Log error stack for debugging
+//   res.status(err.status || 500).json({
+//     message: err.message || 'An unexpected error occurred',
+//     status: false,
+//     errors: err.errors || undefined, // Validation errors, if any
+//   });
+// });
 
 export default app;
