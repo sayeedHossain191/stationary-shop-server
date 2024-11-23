@@ -1,17 +1,28 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { orderZodSchema } from './order.zod.validation';
 import { orderServices } from './order.service';
 
-const orderProduct = async (req: Request, res: Response) => {
+const orderProduct = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
   try {
-    const order = req.body;
+    // Validate input using Zod schema
+    const order = orderZodSchema.parse(req.body);
 
-    // product data validation with zod
-    const zodParseData = orderZodSchema.parse(order);
+    // Process the order via service
+    const result = await orderServices.orderProductIntoDB(order);
 
-    const result = await orderServices.orderProductIntoDB(zodParseData);
+    // Respond with success
+    res.status(201).json({
+      message: 'Order created successfully',
+      status: true,
+      data: result,
+    });
   } catch (err) {
-    console.error(err);
+    // Pass error to next middleware
+    next(err);
   }
 };
 
