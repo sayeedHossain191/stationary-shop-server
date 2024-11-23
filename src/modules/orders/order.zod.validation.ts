@@ -1,3 +1,4 @@
+import { Types } from 'mongoose';
 import { z } from 'zod';
 
 // Define Zod Schema for Order
@@ -10,7 +11,7 @@ export const orderZodSchema = z.object({
   product: z
     .string()
     .regex(/^[a-fA-F0-9]{24}$/, 'Invalid product reference ID.')
-    .min(1, 'Product reference is required.'), // Replaces .nonempty()
+    .transform((id) => new Types.ObjectId(id)), // Transform string to ObjectId
 
   quantity: z
     .number()

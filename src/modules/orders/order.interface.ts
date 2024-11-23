@@ -1,5 +1,5 @@
 // 1. Create an interface representing a document in MongoDB.
-import { Schema, model, Types } from 'mongoose';
+import { Types } from 'mongoose';
 
 export interface Order {
   email: string;
