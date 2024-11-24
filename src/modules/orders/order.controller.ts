@@ -2,30 +2,29 @@ import { Request, Response, NextFunction } from 'express';
 import { orderZodSchema } from './order.zod.validation';
 import { orderServices } from './order.service';
 
+// ORDER A PRODUCT
 const orderProduct = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
   try {
-    // Validate input using Zod schema
+    // Data validation with zod
     const order = orderZodSchema.parse(req.body);
 
-    // Process the order via service
     const result = await orderServices.orderProductIntoDB(order);
 
-    // Respond with success
     res.status(201).json({
       message: 'Order created successfully',
       status: true,
       data: result,
     });
   } catch (err) {
-    // Pass error to next middleware
     next(err);
   }
 };
 
+// CALCULATE REVENUE
 const calculateRevenue = async (
   req: Request,
   res: Response,
@@ -40,7 +39,7 @@ const calculateRevenue = async (
       data: result,
     });
   } catch (err) {
-    next(err); // Pass the error to the error-handling middleware
+    next(err);
   }
 };
 

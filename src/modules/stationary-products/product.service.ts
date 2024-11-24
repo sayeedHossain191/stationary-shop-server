@@ -21,7 +21,9 @@ const getSingleProductFromDB = async (_id: string) => {
 
 // UPDATE A PRODUCT
 const updateProductFromDB = async (_id: string, data: StationeryProduct) => {
-  const result = await StationeryProductModel.findByIdAndUpdate({ _id, data });
+  const result = await StationeryProductModel.findByIdAndUpdate(_id, data, {
+    new: true,
+  });
   return result;
 };
 

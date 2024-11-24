@@ -17,13 +17,12 @@ const createProduct = async (req: Request, res: Response) => {
       message: 'Product created successfully',
       data: result,
     });
-  } catch (err) {
-    // res.json({
-    //     status:false,
-    //     message:"Something went wrong",
-    //     error
-    // })
-    console.error(err);
+  } catch (error) {
+    res.json({
+      status: false,
+      message: 'Something went wrong',
+      error,
+    });
   }
 };
 
@@ -36,8 +35,12 @@ const getAllProducts = async (req: Request, res: Response) => {
       message: 'Products retrieved successfully',
       data: result,
     });
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    res.json({
+      status: false,
+      message: 'Something went wrong',
+      error,
+    });
   }
 };
 
@@ -52,8 +55,12 @@ const getSingleProduct = async (req: Request, res: Response) => {
       message: 'Single Product retrieved successfully',
       data: result,
     });
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    res.json({
+      status: false,
+      message: 'Something went wrong',
+      error,
+    });
   }
 };
 
@@ -69,8 +76,12 @@ const getUpdatedProduct = async (req: Request, res: Response) => {
       message: 'Product updated successfully',
       data: result,
     });
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    res.json({
+      status: false,
+      message: 'Something went wrong',
+      error,
+    });
   }
 };
 
@@ -78,7 +89,6 @@ const getUpdatedProduct = async (req: Request, res: Response) => {
 const deleteProduct = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
-    //const body = req.body;
 
     const result = await ProductServices.deleteProductFromDB(productId);
     res.status(200).json({
@@ -86,8 +96,12 @@ const deleteProduct = async (req: Request, res: Response) => {
       message: 'Product deleted successfully',
       data: result,
     });
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    res.json({
+      status: false,
+      message: 'Something went wrong',
+      error,
+    });
   }
 };
 
