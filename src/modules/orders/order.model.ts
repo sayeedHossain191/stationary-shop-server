@@ -7,6 +7,7 @@ const orderSchema = new Schema<Order>(
       type: String,
       required: [true, 'Customer email is required.'],
       match: [/.+@.+\..+/, 'Please enter a valid email address.'],
+      unique: true,
     },
     product: {
       type: Schema.Types.ObjectId,

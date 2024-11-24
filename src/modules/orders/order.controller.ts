@@ -9,7 +9,7 @@ const orderProduct = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    // Data validation with zod
+    // Data validation with Zod
     const order = orderZodSchema.parse(req.body);
 
     const result = await orderServices.orderProductIntoDB(order);
